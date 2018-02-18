@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using DotLiquid.Exceptions;
 using DotLiquid.Util;
 using System.Diagnostics;
+using System.Runtime.ExceptionServices;
 
 namespace DotLiquid
 {
@@ -169,7 +170,7 @@ namespace DotLiquid
                 return string.Empty;
 
             if (_errorsOutputMode == ErrorsOutputMode.Rethrow)
-                throw ex;
+                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
 
             if (ex is SyntaxException)
             {
